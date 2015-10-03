@@ -15,7 +15,7 @@ from string import Template
 
 # connect to db
 cnx = mysql.connector.connect(user='root', 
-                              password='root',
+                              password='',
                               host='127.0.0.1',
                               database='flushingfood')
 
@@ -32,7 +32,9 @@ template = Template('''
     "description": "$DESC",
     "marker-color": "$COLOR",
     "marker-size": "small",
-    "marker-symbol": "restaurant"
+    "marker-symbol": "restaurant",
+    "cuisine": "$CUISINE",
+    "venue-type": "restaurant"
   },
   "ffm-properties": {
     "title": "$YELP_TITLE",
@@ -88,18 +90,7 @@ for content in rows:
         count = ("     " + str(ratingCount) + ' Reviews');
         rating = imgTemplate.substitute(YELP_KEY = yelpkey, RATING_URL = ratingURL, REVIEW_COUNT = count)
         description = rating + '<br>Cuisine: ' + cuisine + '<br>' + address
-    
 
-    #if zipcode == '11355':
-    #  color = '#3ca0d3'
-    #elif zipcode == '11354':
-    #  color = '#f86767'
-    #elif zipcode == '11358':
-    #  color = '#4db634'
-    #elif zipcode == '11367' or zipcode == '11366':
-    #  color = '#9c89cc'
-    #else:
-    #  color = '#677da7'
     color = '#3ca0d3';
     if cuisine == 'Chinese':
         color = '#3ca0d3'
@@ -109,8 +100,8 @@ for content in rows:
         color = '#3b9147'
 
     geostring += template.substitute(LAT= latitude, LONG = longitude, TITLE = title, 
-                                     DESC = description, COLOR = color, YELP_TITLE = name, 
-                                     YELP_KEY = yelpkey)
+                                     DESC = description, COLOR = color, CUISINE = cuisine, 
+                                     YELP_TITLE = name, YELP_KEY = yelpkey)
 
 # strip extra ending comma
 geostring = geostring[:-2]

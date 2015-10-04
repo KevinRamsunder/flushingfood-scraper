@@ -1,2 +1,3 @@
-# flushingfood-scraper
-small Java script for gathering information on restaurants in Flushing NY.
+# Flushing Underground Map Scripts
+
+Scripts to supplement the Flushing Underground Map functionality.
